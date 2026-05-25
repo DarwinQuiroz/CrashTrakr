@@ -1,58 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CrashTrakr
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto utiliza Docker para facilitar el entorno de desarrollo. A continuación encontrarás las instrucciones necesarias para levantar el proyecto en tu máquina local.
 
-## About Laravel
+## Requisitos Previos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Asegúrate de tener instalados los siguientes programas en tu sistema:
+- [Docker](https://www.docker.com/products/docker-desktop)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instrucciones para levantar el entorno
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Clonar el repositorio** (si aún no lo has hecho):
+   ```bash
+   git clone <url-del-repositorio> crashtrakr
+   cd crashtrakr
+   ```
 
-## Learning Laravel
+2. **Configurar las variables de entorno**:
+   Copia el archivo de ejemplo para crear tu propio archivo `.env`.
+   ```bash
+   cp .env.example .env
+   ```
+   *Nota: Asegúrate de que las credenciales de la base de datos en tu `.env` coincidan con las variables por defecto en el `docker-compose.yml` si decides no configurarlas (Postgres DB: `crashtrakr_db`, User: `darwin_quiroz`, Password: `admin_DB123`).*
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. **Construir y levantar los contenedores**:
+   Ejecuta el siguiente comando para construir las imágenes y levantar los servicios (App, Nginx y PostgreSQL) en segundo plano:
+   ```bash
+   docker compose up -d --build
+   ```
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. **Instalar dependencias de PHP (Composer)**:
+   Una vez que los contenedores estén corriendo, instala las dependencias de Laravel:
+   ```bash
+   docker compose exec app composer install
+   ```
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+5. **Generar la clave de la aplicación**:
+   ```bash
+   docker compose exec app php artisan key:generate
+   ```
 
-## Agentic Development
+6. **Ejecutar las migraciones de la base de datos**:
+   ```bash
+   docker compose exec app php artisan migrate
+   ```
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+7. **Instalar dependencias de Node y compilar assets (Vite)**:
+   ```bash
+   docker compose exec app npm install
+   docker compose exec app npm run dev
+   ```
 
-```bash
-composer require laravel/boost --dev
+## Acceso a la aplicación
 
-php artisan boost:install
-```
+Una vez completados los pasos anteriores, puedes acceder a la aplicación y servicios en las siguientes rutas:
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+- **Aplicación Web (Nginx)**: [http://localhost:8000](http://localhost:8000)
+- **Vite (Hot Module Replacement)**: [http://localhost:5173](http://localhost:5173)
+- **Base de Datos (PostgreSQL)**: `localhost:5432`
 
-## Contributing
+## Comandos Útiles
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Detener los contenedores**:
+  ```bash
+  docker compose stop
+  ```
+- **Bajar los contenedores y eliminar redes**:
+  ```bash
+  docker compose down
+  ```
+- **Ver los logs de los contenedores**:
+  ```bash
+  docker compose logs -f
+  ```
+- **Acceder a la consola del contenedor de la aplicación**:
+  ```bash
+  docker compose exec app bash
+  ```
