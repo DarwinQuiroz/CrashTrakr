@@ -28,7 +28,7 @@ Asegúrate de tener instalados los siguientes programas en tu sistema:
     _Nota: Asegúrate de que las credenciales de la base de datos en tu `.env` coincidan con las variables por defecto en el `docker-compose.yml` si decides no configurarlas (Postgres DB: `crashtrakr_db`, User: `darwin_quiroz`, Password: `admin_DB123`)._
 
 3. **Construir y levantar los contenedores**:
-   Ejecuta el siguiente comando para construir las imágenes y levantar los servicios (App, Nginx y PostgreSQL) en segundo plano:
+   Ejecuta el siguiente comando para construir las imágenes y levantar los servicios (App, Nginx, PostgreSQL y Node) en segundo plano:
 
     ```bash
     docker compose up -d --build
@@ -54,9 +54,10 @@ Asegúrate de tener instalados los siguientes programas en tu sistema:
     ```
 
 7. **Instalar dependencias de Node y compilar assets (Vite)**:
+    El nuevo contenedor de Node se encarga automáticamente de ejecutar `npm install` e iniciar el servidor de desarrollo en segundo plano. Si necesitas ejecutar un comando manualmente, puedes hacerlo en el contenedor `node`:
     ```bash
-    docker compose exec app npm install
-    docker compose exec app npm run dev
+    docker compose exec node npm install
+    docker compose exec node npm run dev
     ```
 
 ## Acceso a la aplicación
