@@ -42,6 +42,6 @@ class VerifyEmail extends Notification
             ->line('Gracias por registrarte en ' . config('app.name') . ', tu cuenta ya está lista solo debes confirmarla.')
             ->action('Confirma tu cuenta.', $verificationUrl)
             ->line('Si no creaste esta cuenta, puedes ignorar este mensaje.')
-            ->salutation('Saludos ' . config('app.name'));
+            ->salutation('Saludos, ' . config('app.name'));
     }
 }
