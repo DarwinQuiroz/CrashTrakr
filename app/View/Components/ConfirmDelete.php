@@ -6,15 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class BudgetDropdown extends Component
+class ConfirmDelete extends Component
 {
-    public $budget;
     /**
      * Create a new component instance.
      */
-    public function __construct($budget)
+    public function __construct(public string $id, public string $title, public string $message, public string $action)
     {
-        $this->budget = $budget;
+        //
     }
 
     /**
@@ -22,6 +21,6 @@ class BudgetDropdown extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.budget-dropdown');
+        return view('components.confirm-delete');
     }
 }

@@ -24,7 +24,7 @@
                 </div>
 
                 <nav class="flex flex-col lg:flex-row items-center gap-4">
-                    @auth
+                    @if(Auth::check())
                         <p class="text-white text-xl">Hola: {{ Auth::user()->name }}</p>
                         <x-dropdown-menu />
                     @else
@@ -39,10 +39,16 @@
                                 Crear Cuenta
                             </a>
                         @endif
-                    @endauth
+                    @endif
                 </nav>
             </div>
         </header>
+
+        @if(session('success'))
+            <div class="max-w-5xl mx-auto">
+                <x-alert :message="session('success')" />
+            </div>
+        @endif
 
         @yield('content')
     </body>
