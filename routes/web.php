@@ -35,4 +35,6 @@ Route::post('/email/verification-notificacion', function (Request $request) {
     return back()->with('success', 'Correo de verificación enviado correctamente.');
 })->middleware(['auth', 'throttle:1,1'])->name('verification.send');
 
-Route::get('/dashboard', [BudgetController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [BudgetController::class, 'index'])->name('dashboard');
+Route::get('/budgets/create', [BudgetController::class, 'create'])->name('budgets.create');
+Route::post('/budgets/store', [BudgetController::class, 'store'])->name('budgets.store');

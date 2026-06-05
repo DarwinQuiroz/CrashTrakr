@@ -4,7 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Budget;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\BudgetRequest;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 
+#[Middleware("auth")]
+#[Middleware("verified")]
 class BudgetController extends Controller
 {
     /**
@@ -12,7 +17,11 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $budgets = Auth::user()->budgets()->get();
+
+        return view('dashboard', [
+            'budgets' => $budgets
+        ]);
     }
 
     /**
@@ -20,15 +29,19 @@ class BudgetController extends Controller
      */
     public function create()
     {
-        //
+        return view('budgets.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BudgetRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $budget = Auth::user()->budgets()->create($data);
+
+        return redirect()->route('dashboard')->with('success', 'Presupuesto creado correctamente');
     }
 
     /**
