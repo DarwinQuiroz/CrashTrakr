@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\LogoutController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -42,3 +43,5 @@ Route::get('/budgets/{budget}', [BudgetController::class, 'show'])->name('budget
 Route::get('/budgets/{budget}/edit', [BudgetController::class, 'edit'])->name('budgets.edit');
 Route::put('/budgets/{budget}', [BudgetController::class, 'update'])->name('budgets.update');
 Route::delete('/budgets/{budget}', [BudgetController::class, 'destroy'])->name('budgets.destroy');
+
+Route::post('/budgets/{budget}/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
