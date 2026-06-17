@@ -1,3 +1,5 @@
+import { Expense } from "./expense";
+
 type BudgetType = 'general' | 'goal';
 
 export interface Budget {
@@ -5,6 +7,7 @@ export interface Budget {
     name: string;
     amount: string;
     type: BudgetType;
+    expenses: Expense[];
     created_at: string;
     updated_at: string;
 }

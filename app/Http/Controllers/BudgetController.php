@@ -57,6 +57,10 @@ class BudgetController extends Controller
             'label' => $category->label(),
         ]);
 
+        $budget->load([
+            'expenses' => fn($query) => $query->latest()->get()
+        ]);
+
         return Inertia::render('Budgets/Show', [
             'budget' => $budget,
             'categories' => $categories
