@@ -46,3 +46,4 @@ Route::delete('/budgets/{budget}', [BudgetController::class, 'destroy'])->name('
 
 Route::post('/budgets/{budget}/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
 Route::put('/budgets/{budget}/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
+Route::delete('/budgets/{budget}/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');

@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { formatCurrency, formatDate } from "@/utils";
 import { ProgressBar } from "@/Components/ProgressBar";
 import ExpenseDropdown from "@/Components/ExpenseDropdown";
+import DeleteExpenseModal from "@/Components/DeleteExpenseModal";
 
 type Props = {
     budget: Budget;
@@ -148,6 +149,8 @@ export default function Show({ budget, categories, spent }: Props) {
                                                     <ExpenseDropdown
                                                         expense={expense}
                                                     />
+
+                                                    <DeleteExpenseModal />
                                                 </td>
                                             </tr>
                                         ))}

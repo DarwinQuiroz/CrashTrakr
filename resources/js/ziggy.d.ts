@@ -59,7 +59,20 @@ declare module 'ziggy-js' {
     "expenses.update": [
         {
             "name": "budget",
-            "required": true
+            "required": true,
+            "binding": "id"
+        },
+        {
+            "name": "expense",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "destroy.update": [
+        {
+            "name": "budget",
+            "required": true,
+            "binding": "id"
         },
         {
             "name": "expense",
